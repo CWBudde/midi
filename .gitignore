@@ -1,0 +1,25 @@
+# Output
+coverage.out
+coverage.html
+coverage.txt
+bin/
+dist/
+
+# Go
+*.exe
+*.test
+*.prof
+go.work
+go.work.sum
+
+# IDEs
+.vscode/
+.idea/
+.serena/
+.claude/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
