@@ -107,3 +107,19 @@ func ExampleTrack_Tempo() {
 	fmt.Printf("% X\n", t.Events[0].Data)
 	// Output: FF 51 03 08 B8 25
 }
+
+func ExampleTrack_PitchBend() {
+	t := &smf.Track{}
+	t.Note(0, 60, 100, 0, 480)
+	t.PitchBend(240, 0, 4096) // half of the receiver's bend range up
+	t.PitchBend(480, 0, 0)    // back to center
+
+	for _, e := range t.Events {
+		fmt.Printf("%3d % X\n", e.Tick, e.Data)
+	}
+	// Output:
+	//   0 90 3C 64
+	// 480 80 3C 00
+	// 240 E0 00 60
+	// 480 E0 00 40
+}

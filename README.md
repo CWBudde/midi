@@ -99,6 +99,7 @@ message (status byte included).
 | `Track.Name`, `Text`, `Marker`                                | Name (FF 03), text (FF 01) and marker (FF 06) events  |
 | `Track.Tempo`, `TimeSignature`, `KeySignature`                | Tempo (FF 51), meter (FF 58) and key (FF 59) events   |
 | `Track.Program`, `Note`                                       | Program change and note-on/note-off pairs             |
+| `Track.ControlChange`, `PitchBend`                            | Control change (Bn) and signed pitch bend (En) events |
 | `VLQ`                                                         | MIDI variable-length quantity encoding                |
 | `Write`                                                       | Emit a format-1 file                                  |
 | `Read`, `File`                                                | Parse a file into tracks of absolute-tick events      |
