@@ -73,6 +73,23 @@ func (t *Track) Program(tick, ch, prog int) {
 	t.add(tick, 0xC0|byte(ch&15), byte(prog&127))
 }
 
+// ControlChange adds a control change on channel ch (0-15) at tick.
+// Channel, controller and value are masked to their valid ranges (4, 7 and
+// 7 bits).
+func (t *Track) ControlChange(tick, ch, controller, value int) {
+	t.add(tick, 0xB0|byte(ch&15), byte(controller&127), byte(value&127))
+}
+
+// PitchBend adds a pitch bend on channel ch (0-15) at tick. value is signed
+// around the center: -8192 bends fully down, 0 is no bend and 8191 bends
+// fully up; values outside that range are clamped. The semitone span of a
+// full bend is set by the receiver (commonly ±2 semitones), not by the
+// message.
+func (t *Track) PitchBend(tick, ch, value int) {
+	v := min(8191, max(-8192, value)) + 8192
+	t.add(tick, 0xE0|byte(ch&15), byte(v&127), byte(v>>7))
+}
+
 // TimeSignature adds a time signature meta event (FF 58) for num/den at
 // tick. den must be a power of two; it is stored as its base-2 logarithm.
 // The metronome is set to 24 MIDI clocks per click and 8 thirty-second
